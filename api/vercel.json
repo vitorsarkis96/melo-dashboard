@@ -1,1 +1,7 @@
-vercel.json
+{
+  "functions": {
+    "api/clickup.js": {
+      "runtime": "nodejs20.x"
+    }
+  }
+}
