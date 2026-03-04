@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Melo Creative — Dashboard</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0f0f1a; color: #e2e8f0; font-family: 'Inter', sans-serif; min-height: 100vh; }
+    a { color: inherit; text-decoration: none; }
+    #login { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+    .login-box { background: #1e1e2e; border: 1px solid #2d2d3e; border-radius: 16px; padding: 40px 36px; width: 320px; text-align: center; }
+    .login-box .brand { font-size: 10px; color: #7c3aed; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+    .login-box h1 { font-size: 18px; font-weight: 800; color: #f1f5f9; margin-bottom: 4px; }
+    .login-box p { font-size: 12px; color: #475569; margin-bottom: 28px; }
+    .login-box input { width: 100%; background: #16162a; border: 1px solid #2d2d3e; border-radius: 8px; padding: 10px 14px; color: #f1f5f9; font-size: 14px; outline: none; margin-bottom: 8px; }
+    .login-box input.error { border-color: #ef4444; }
+    .login-box .err-msg { font-size: 11px; color: #ef4444; margin-bottom: 8px; }
+    .login-box button { width: 100%; background: #7c3aed; color: #fff; border: none; border-radius: 8px; padding: 10px; font-weight: 700; font-size: 13px; cursor: pointer; margin-top: 4px; }
+    #app { display: none; padding: 22px; }
+    .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+    .header .brand { font-size: 10px; color: #7c3aed; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 3px; }
+    .header h1 { font-size: 20px; font-weight: 800; color: #f1f5f9; }
+    .header .sync-info { font-size: 11px; color: #334155; margin-top: 2px; }
+    .cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
+    .card { background: #1e1e2e; border: 1px solid #2d2d3e; border-radius: 10px; padding: 14px 16px; }
+    .card .val { font-size: 24px; font-weight: 800; }
+    .card .lbl { font-size: 11px; color: #64748b; margin-top: 2px; }
+    .btn-sync { background: #7c3aed; color: #fff; border: none; border-radius: 10px; padding: 10px 20px; font-weight: 700; font-size: 12px; cursor: pointer; }
+    .btn-sync:disabled { background: #1e1e2e; color: #475569; cursor: not-allowed; }
+    .tabs { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+    .tab { padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 12px; background: #1e1e2e; color: #64748b; }
+    .tab.active { background: #7c3aed; color: #fff; }
+    .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+    .chip { padding: 3px 11px; border-radius: 20px; border: 1px solid #2d2d3e; background: transparent; color: #64748b; font-size: 11px; font-weight: 600; cursor: pointer; }
+    .table-wrap { background: #1e1e2e; border-radius: 12px; border: 1px solid #2d2d3e; overflow: hidden; }
+    table { width: 100%; border-collapse: collapse; }
+    thead tr { background: #16162a; }
+    th { padding: 10px 14px; text-align: left; font-size: 10px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 1px; }
+    td { padding: 10px 14px; border-top: 1px solid #1a1a2e; font-size: 12px; }
+    .status-badge { padding: 3px 8px; border-radius: 20px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+    .assignee { font-size: 10px; background: #16162a; color: #94a3b8; padding: 2px 6px; border-radius: 12px; border: 1px solid #2d2d3e; white-space: nowrap; display: inline-block; margin: 1px; }
+    .client-card { background: #1e1e2e; border: 1px solid #2d2d3e; border-radius: 12px; padding: 16px 20px; margin-bottom: 10px; }
+    .client-card .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .progress { background: #16162a; border-radius: 6px; height: 5px; margin-bottom: 10px; }
+    .progress-bar { height: 100%; border-radius: 6px; }
+    .badges { display: flex; gap: 5px; flex-wrap: wrap; }
+    .deadline-card { background: #1e1e2e; border: 1px solid #2d2d3e; border-radius: 12px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .bar-wrap { background: #16162a; border-radius: 4px; height: 6px; width: 120px; }
+    .bar { height: 100%; border-radius: 4px; }
+    .empty { padding: 40px; text-align: center; color: #475569; }
+    .err-bar { background: #2d1515; border: 1px solid #7f1d1d; border-radius: 10px; padding: 12px 18px; color: #fca5a5; margin-bottom: 16px; font-size: 13px; }
+  </style>
+</head>
+<body>
+<div id="login">
+  <div class="login-box">
+    <div class="brand">Melo Creative</div>
+    <h1>Dashboard</h1>
+    <p>Acesso restrito</p>
+    <input type="password" id="pwd" placeholder="Senha" />
+    <div class="err-msg" id="err-msg" style="display:none">Senha incorreta</div>
+    <button onclick="tryLogin()">Entrar</button>
+  </div>
+</div>
+<div id="app">
+  <div class="header">
+    <div>
+      <div class="brand">Melo Creative</div>
+      <h1>Dashboard de Projetos</h1>
+      <div class="sync-info" id="sync-info">Clique em Sincronizar para carregar</div>
+    </div>
+    <button class="btn-sync" id="btn-sync" onclick="fetchData()">⟳ Sincronizar</button>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="val" id="c-tasks" style="color:#34d399">—</div><div class="lbl">Tarefas ativas</div></div>
+    <div class="card"><div class="val" id="c-deadlines" style="color:#fbbf24">—</div><div class="lbl">Com deadline</div></div>
+    <div class="card"><div class="val" id="c-clients" style="color:#7c3aed">—</div><div class="lbl">Clientes</div></div>
+  </div>
+  <div id="err-bar" class="err-bar" style="display:none"></div>
+  <div class="tabs">
+    <button class="tab active" onclick="setTab('status',this)">Tarefas</button>
+    <button class="tab" onclick="setTab('deadlines',this)">Deadlines</button>
+    <button class="tab" onclick="setTab('clientes',this)">Por cliente</button>
+    <button class="tab" onclick="setTab('equipe',this)">Equipe</button>
+  </div>
+  <div id="chips" class="chips"></div>
+  <div id="content"></div>
+</div>
+<script>
+const SENHA = "102353";
+const API = "/api/clickup";
+const PALETTE = ["#7c3aed","#2563eb","#0891b2","#059669","#d97706","#dc2626","#be185d","#7c2d12","#1e40af","#065f46","#6d28d9","#0e7490"];
+const STATUS_MAP = {
+  "design":"#60a5fa","aprovação interna":"#fbbf24","aprovação cliente":"#34d399",
+  "envio ao cliente":"#c084fc","cliente confirmado":"#86efac","pré-workflow":"#7dd3fc",
+  "reunião alinhamento":"#f0abfc","programar / publicar":"#4ade80","aprovado":"#22c55e",
+  "conteúdo":"#fb923c","vídeo":"#a78bfa","briefing recebido":"#38bdf8",
+  "onboarding":"#67e8f9","esperando briefing":"#fde68a","publicado":"#6ee7b7",
+  "in progress":"#34d399","to do":"#94a3b8","social media (duplicar)":"#4b5563",
+};
+let tasks = [], activeTab = "status", activeClient = "Todos";
+function tryLogin() {
+  const v = document.getElementById("pwd").value;
+  if (v === SENHA) {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("app").style.display = "block";
+    fetchData();
+  } else {
+    document.getElementById("pwd").classList.add("error");
+    document.getElementById("err-msg").style.display = "block";
+  }
+}
+document.getElementById("pwd").addEventListener("keydown", e => { if (e.key === "Enter") tryLogin(); });
+async function fetchData() {
+  const btn = document.getElementById("btn-sync");
+  btn.disabled = true; btn.textContent = "Sincronizando...";
+  document.getElementById("err-bar").style.display = "none";
+  try {
+    const res = await fetch(API);
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    tasks = data.tasks || [];
+    const now = new Date();
+    document.getElementById("sync-info").textContent = "🟢 Sync: " + now.toLocaleTimeString("pt-BR");
+    updateCards(); renderTab();
+  } catch(e) {
+    const eb = document.getElementById("err-bar");
+    eb.style.display = "block"; eb.textContent = "⚠ " + e.message;
+  }
+  btn.disabled = false; btn.textContent = "⟳ Sincronizar";
+}
+function clients() { return [...new Set(tasks.map(t=>t.client))].sort(); }
+function cc(c) { const cl = clients(); return PALETTE[cl.indexOf(c) % PALETTE.length]; }
+function sc(s) { return STATUS_MAP[(s||"").toLowerCase()] || "#94a3b8"; }
+function sbg(s) { return sc(s) + "22"; }
+function updateCards() {
+  const dl = tasks.filter(t=>t.due);
+  document.getElementById("c-tasks").textContent = tasks.length;
+  document.getElementById("c-deadlines").textContent = dl.length;
+  document.getElementById("c-clients").textContent = clients().length;
+}
+function setTab(tab, el) {
+  activeTab = tab; activeClient = "Todos";
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  el.classList.add("active");
+  renderTab();
+}
+function renderTab() {
+  const chips = document.getElementById("chips");
+  const content = document.getElementById("content");
+  chips.innerHTML = "";
+  if (activeTab === "status") { renderChips(); content.innerHTML = renderTable(); }
+  else if (activeTab === "deadlines") { content.innerHTML = renderDeadlines(); }
+  else if (activeTab === "clientes") { content.innerHTML = renderClients(); }
+  else if (activeTab === "equipe") { content.innerHTML = renderEquipe(); }
+}
+function renderChips() {
+  const chips = document.getElementById("chips");
+  const all = ["Todos", ...clients()];
+  chips.innerHTML = all.map(c => {
+    const active = c === activeClient;
+    const color = c === "Todos" ? "#7c3aed" : cc(c);
+    return `<button class="chip" onclick="filterClient('${c}')" style="border-color:${active?color:"#2d2d3e"};background:${active?color+"22":"transparent"};color:${active?color:"#64748b"}">${c}</button>`;
+  }).join("");
+}
+function filterClient(c) { activeClient = c; renderTab(); }
+function renderTable() {
+  const filtered = activeClient === "Todos" ? tasks : tasks.filter(t=>t.client===activeClient);
+  if (!filtered.length) return '<div class="empty">Nenhuma tarefa.</div>';
+  return `<div class="table-wrap"><table>
+    <thead><tr><th>Tarefa</th><th>Cliente</th><th>Status</th><th>Responsáveis</th></tr></thead>
+    <tbody>${filtered.map(t=>`
+      <tr>
+        <td><a href="${t.url}" target="_blank" style="display:block;max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#e2e8f0;font-weight:500">${t.name}</a></td>
+        <td><span style="color:${cc(t.client)};font-weight:600;font-size:11px">${t.client}</span></td>
+        <td><span class="status-badge" style="background:${sbg(t.status)};color:${sc(t.status)}">${t.status}</span></td>
+        <td>${(t.assignees||[]).slice(0,3).map(a=>`<span class="assignee">${a.split(" ")[0]}</span>`).join("")}</td>
+      </tr>`).join("")}
+    </tbody></table></div>`;
+}
+function renderDeadlines() {
+  const dl = tasks.filter(t=>t.due).sort((a,b)=>a.due-b.due).slice(0,20);
+  if (!dl.length) return '<div class="empty">Nenhuma deadline registrada.</div>';
+  return dl.map(t=>{
+    const days = Math.ceil((t.due - Date.now())/86400000);
+    const c = days<0?"#ef4444":days<=2?"#f97316":days<=7?"#fbbf24":"#34d399";
+    const d = new Date(t.due).toLocaleDateString("pt-BR",{day:"2-digit",month:"short"});
+    const label = days<0?`${Math.abs(days)}d atraso`:days===0?"Hoje":`${days}d`;
+    return `<div class="deadline-card">
+      <div><div style="font-size:13px;font-weight:600;color:#f1f5f9;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.name}</div>
+      <div style="font-size:11px;color:${cc(t.client)};margin-top:2px">${t.client}</div></div>
+      <div style="text-align:right"><div style="font-size:13px;font-weight:700;color:${c}">${d}</div>
+      <div style="font-size:11px;color:${c}">${label}</div></div>
+    </div>`;
+  }).join("");
+}
+function renderClients() {
+  return clients().map(c=>{
+    const ct = tasks.filter(t=>t.client===c);
+    const pct = Math.max((ct.length/tasks.length)*100, 3);
+    const color = cc(c);
+    return `<div class="client-card">
+      <div class="top"><span style="font-weight:700;font-size:14px;color:${color}">${c}</span>
+      <span style="font-size:11px;color:#64748b">${ct.length} tarefa${ct.length!==1?"s":""}</span></div>
+      <div class="progress"><div class="progress-bar" style="width:${pct}%;background:${color}"></div></div>
+      <div class="badges">${ct.map(t=>`<span class="status-badge" style="background:${sbg(t.status)};color:${sc(t.status)}">${t.status}</span>`).join("")}</div>
+    </div>`;
+  }).join("");
+}
+function renderEquipe() {
+  const assignees = [...new Set(tasks.flatMap(t=>t.assignees||[]))].sort();
+  const rows = assignees.map(a=>{
+    const at = tasks.filter(t=>(t.assignees||[]).includes(a));
+    if (!at.length) return "";
+    const ac = [...new Set(at.map(t=>t.client))];
+    const pct = Math.min((at.length/8)*100,100);
+    const barColor = at.length>=7?"#ef4444":at.length>=4?"#f97316":"#7c3aed";
+    return `<tr>
+      <td style="color:#e2e8f0;font-weight:500">${a}</td>
+      <td style="color:#a78bfa;font-weight:700">${at.length}</td>
+      <td>${ac.map(c=>`<span style="font-size:10px;color:${cc(c)};background:${cc(c)}22;padding:2px 7px;border-radius:10px;font-weight:600;display:inline-block;margin:1px">${c}</span>`).join("")}</td>
+      <td><div class="bar-wrap"><div class="bar" style="width:${pct}%;background:${barColor}"></div></div></td>
+    </tr>`;
+  }).join("");
+  return `<div class="table-wrap"><table>
+    <thead><tr><th>Membro</th><th>Tarefas</th><th>Clientes</th><th>Carga</th></tr></thead>
+    <tbody>${rows}</tbody></table></div>`;
+}
+</script>
+</body>
+</html>
