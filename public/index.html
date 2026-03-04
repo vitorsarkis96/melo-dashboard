@@ -10,24 +10,24 @@
     a { color: inherit; text-decoration: none; }
     #login { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
     .login-box { background: #1e1e2e; border: 1px solid #2d2d3e; border-radius: 16px; padding: 40px 36px; width: 320px; text-align: center; }
-    .login-box .brand { font-size: 10px; color: #7c3aed; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+    .brand-label { font-size: 10px; color: #7c3aed; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
     .login-box h1 { font-size: 18px; font-weight: 800; color: #f1f5f9; margin-bottom: 4px; }
     .login-box p { font-size: 12px; color: #475569; margin-bottom: 28px; }
     .login-box input { width: 100%; background: #16162a; border: 1px solid #2d2d3e; border-radius: 8px; padding: 10px 14px; color: #f1f5f9; font-size: 14px; outline: none; margin-bottom: 8px; }
     .login-box input.error { border-color: #ef4444; }
-    .login-box .err-msg { font-size: 11px; color: #ef4444; margin-bottom: 8px; }
+    .err-msg { font-size: 11px; color: #ef4444; margin-bottom: 8px; }
     .login-box button { width: 100%; background: #7c3aed; color: #fff; border: none; border-radius: 8px; padding: 10px; font-weight: 700; font-size: 13px; cursor: pointer; margin-top: 4px; }
-    #app { display: none; padding: 22px; }
+    #app { display: none; padding: 22px; max-width: 1200px; margin: 0 auto; }
     .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-    .header .brand { font-size: 10px; color: #7c3aed; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 3px; }
     .header h1 { font-size: 20px; font-weight: 800; color: #f1f5f9; }
-    .header .sync-info { font-size: 11px; color: #334155; margin-top: 2px; }
-    .cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
+    .sync-info { font-size: 11px; color: #334155; margin-top: 2px; }
+    .btn-sync { background: #7c3aed; color: #fff; border: none; border-radius: 10px; padding: 10px 20px; font-weight: 700; font-size: 12px; cursor: pointer; }
+    .btn-sync:disabled { background: #1e1e2e; color: #475569; cursor: not-allowed; }
+    .cards { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
     .card { background: #1e1e2e; border: 1px solid #2d2d3e; border-radius: 10px; padding: 14px 16px; }
     .card .val { font-size: 24px; font-weight: 800; }
     .card .lbl { font-size: 11px; color: #64748b; margin-top: 2px; }
-    .btn-sync { background: #7c3aed; color: #fff; border: none; border-radius: 10px; padding: 10px 20px; font-weight: 700; font-size: 12px; cursor: pointer; }
-    .btn-sync:disabled { background: #1e1e2e; color: #475569; cursor: not-allowed; }
+    .err-bar { background: #2d1515; border: 1px solid #7f1d1d; border-radius: 10px; padding: 12px 18px; color: #fca5a5; margin-bottom: 16px; font-size: 13px; }
     .tabs { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
     .tab { padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; font-size: 12px; background: #1e1e2e; color: #64748b; }
     .tab.active { background: #7c3aed; color: #fff; }
@@ -36,57 +36,71 @@
     .table-wrap { background: #1e1e2e; border-radius: 12px; border: 1px solid #2d2d3e; overflow: hidden; }
     table { width: 100%; border-collapse: collapse; }
     thead tr { background: #16162a; }
-    th { padding: 10px 14px; text-align: left; font-size: 10px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 1px; }
-    td { padding: 10px 14px; border-top: 1px solid #1a1a2e; font-size: 12px; }
-    .status-badge { padding: 3px 8px; border-radius: 20px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+    th { padding: 10px 14px; text-align: left; font-size: 10px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+    td { padding: 10px 14px; border-top: 1px solid #1a1a2e; font-size: 12px; vertical-align: middle; }
+    tr.overdue { background: #1a0a0a; }
+    .badge { padding: 3px 8px; border-radius: 20px; font-size: 10px; font-weight: 700; white-space: nowrap; }
     .assignee { font-size: 10px; background: #16162a; color: #94a3b8; padding: 2px 6px; border-radius: 12px; border: 1px solid #2d2d3e; white-space: nowrap; display: inline-block; margin: 1px; }
+    .overdue-tag { background: #7f1d1d; color: #fca5a5; padding: 2px 7px; border-radius: 10px; font-size: 10px; font-weight: 700; }
     .client-card { background: #1e1e2e; border: 1px solid #2d2d3e; border-radius: 12px; padding: 16px 20px; margin-bottom: 10px; }
-    .client-card .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
     .progress { background: #16162a; border-radius: 6px; height: 5px; margin-bottom: 10px; }
     .progress-bar { height: 100%; border-radius: 6px; }
-    .badges { display: flex; gap: 5px; flex-wrap: wrap; }
-    .deadline-card { background: #1e1e2e; border: 1px solid #2d2d3e; border-radius: 12px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-    .bar-wrap { background: #16162a; border-radius: 4px; height: 6px; width: 120px; }
+    .deadline-card { background: #1e1e2e; border: 1px solid #2d2d3e; border-radius: 12px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .deadline-card.overdue { border-color: #7f1d1d; background: #1a0a0a; }
+    .bar-wrap { background: #16162a; border-radius: 4px; height: 6px; width: 100px; }
     .bar { height: 100%; border-radius: 4px; }
     .empty { padding: 40px; text-align: center; color: #475569; }
-    .err-bar { background: #2d1515; border: 1px solid #7f1d1d; border-radius: 10px; padding: 12px 18px; color: #fca5a5; margin-bottom: 16px; font-size: 13px; }
+    select.status-select { background: #16162a; border: 1px solid #2d2d3e; color: #e2e8f0; border-radius: 8px; padding: 4px 8px; font-size: 11px; cursor: pointer; outline: none; }
+    .saving { color: #fbbf24; font-size: 10px; }
+    .saved { color: #34d399; font-size: 10px; }
+    .section-title { font-size: 13px; font-weight: 700; color: #94a3b8; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+    .week-section { margin-bottom: 24px; }
   </style>
 </head>
 <body>
+
 <div id="login">
   <div class="login-box">
-    <div class="brand">Melo Creative</div>
-    <h1>Dashboard</h1>
+    <div class="brand-label">Melo Creative</div>
+    <h1>Dashboard CS</h1>
     <p>Acesso restrito</p>
     <input type="password" id="pwd" placeholder="Senha" />
     <div class="err-msg" id="err-msg" style="display:none">Senha incorreta</div>
     <button onclick="tryLogin()">Entrar</button>
   </div>
 </div>
+
 <div id="app">
   <div class="header">
     <div>
-      <div class="brand">Melo Creative</div>
+      <div class="brand-label">Melo Creative</div>
       <h1>Dashboard de Projetos</h1>
       <div class="sync-info" id="sync-info">Clique em Sincronizar para carregar</div>
     </div>
     <button class="btn-sync" id="btn-sync" onclick="fetchData()">⟳ Sincronizar</button>
   </div>
+
   <div class="cards">
     <div class="card"><div class="val" id="c-tasks" style="color:#34d399">—</div><div class="lbl">Tarefas ativas</div></div>
-    <div class="card"><div class="val" id="c-deadlines" style="color:#fbbf24">—</div><div class="lbl">Com deadline</div></div>
+    <div class="card"><div class="val" id="c-overdue" style="color:#ef4444">—</div><div class="lbl">Atrasadas</div></div>
+    <div class="card"><div class="val" id="c-week" style="color:#fbbf24">—</div><div class="lbl">Vencem essa semana</div></div>
     <div class="card"><div class="val" id="c-clients" style="color:#7c3aed">—</div><div class="lbl">Clientes</div></div>
   </div>
+
   <div id="err-bar" class="err-bar" style="display:none"></div>
+
   <div class="tabs">
-    <button class="tab active" onclick="setTab('status',this)">Tarefas</button>
-    <button class="tab" onclick="setTab('deadlines',this)">Deadlines</button>
+    <button class="tab active" onclick="setTab('atrasadas',this)">🔴 Atrasadas</button>
+    <button class="tab" onclick="setTab('semana',this)">📅 Esta semana</button>
+    <button class="tab" onclick="setTab('todas',this)">Todas as tarefas</button>
+    <button class="tab" onclick="setTab('tempo',this)">⏱ Tempo</button>
     <button class="tab" onclick="setTab('clientes',this)">Por cliente</button>
-    <button class="tab" onclick="setTab('equipe',this)">Equipe</button>
   </div>
+
   <div id="chips" class="chips"></div>
   <div id="content"></div>
 </div>
+
 <script>
 const SENHA = "102353";
 const API = "/api/clickup";
@@ -99,7 +113,12 @@ const STATUS_MAP = {
   "onboarding":"#67e8f9","esperando briefing":"#fde68a","publicado":"#6ee7b7",
   "in progress":"#34d399","to do":"#94a3b8","social media (duplicar)":"#4b5563",
 };
-let tasks = [], activeTab = "status", activeClient = "Todos";
+const STATUSES = ["briefing recebido","esperando briefing","design","conteúdo","vídeo",
+  "aprovação interna","aprovação cliente","envio ao cliente","cliente confirmado",
+  "programar / publicar","publicado","aprovado","reunião alinhamento","pré-workflow","onboarding"];
+
+let tasks = [], activeTab = "atrasadas", activeClient = "Todos";
+
 function tryLogin() {
   const v = document.getElementById("pwd").value;
   if (v === SENHA) {
@@ -111,7 +130,8 @@ function tryLogin() {
     document.getElementById("err-msg").style.display = "block";
   }
 }
-document.getElementById("pwd").addEventListener("keydown", e => { if (e.key === "Enter") tryLogin(); });
+document.getElementById("pwd").addEventListener("keydown", e => { if (e.key==="Enter") tryLogin(); });
+
 async function fetchData() {
   const btn = document.getElementById("btn-sync");
   btn.disabled = true; btn.textContent = "Sincronizando...";
@@ -121,8 +141,7 @@ async function fetchData() {
     const data = await res.json();
     if (data.error) throw new Error(data.error);
     tasks = data.tasks || [];
-    const now = new Date();
-    document.getElementById("sync-info").textContent = "🟢 Sync: " + now.toLocaleTimeString("pt-BR");
+    document.getElementById("sync-info").textContent = "🟢 Sync: " + new Date().toLocaleTimeString("pt-BR");
     updateCards(); renderTab();
   } catch(e) {
     const eb = document.getElementById("err-bar");
@@ -130,102 +149,168 @@ async function fetchData() {
   }
   btn.disabled = false; btn.textContent = "⟳ Sincronizar";
 }
+
+async function updateStatus(taskId, status, spanId) {
+  const span = document.getElementById(spanId);
+  if (span) { span.className = "saving"; span.textContent = "salvando..."; }
+  try {
+    await fetch(API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ taskId, status })
+    });
+    const t = tasks.find(x=>x.id===taskId);
+    if (t) t.status = status;
+    if (span) { span.className = "saved"; span.textContent = "✓ salvo"; setTimeout(()=>{ if(span) span.textContent=""; },2000); }
+  } catch(e) {
+    if (span) { span.className = "saving"; span.textContent = "erro"; }
+  }
+}
+
 function clients() { return [...new Set(tasks.map(t=>t.client))].sort(); }
-function cc(c) { const cl = clients(); return PALETTE[cl.indexOf(c) % PALETTE.length]; }
+function cc(c) { return PALETTE[clients().indexOf(c) % PALETTE.length]; }
 function sc(s) { return STATUS_MAP[(s||"").toLowerCase()] || "#94a3b8"; }
-function sbg(s) { return sc(s) + "22"; }
+function fmtMs(ms) { if (!ms) return "0h"; const h=Math.floor(ms/3600000); const m=Math.floor((ms%3600000)/60000); return m>0?h+"h "+m+"m":h+"h"; }
+function fmtDate(ts) { return new Date(ts).toLocaleDateString("pt-BR",{day:"2-digit",month:"short"}); }
+function daysUntil(ts) { return Math.ceil((ts-Date.now())/86400000); }
+function urgColor(d) { return d<0?"#ef4444":d<=2?"#f97316":d<=7?"#fbbf24":"#34d399"; }
+
 function updateCards() {
-  const dl = tasks.filter(t=>t.due);
+  const now = Date.now();
+  const endWeek = now + 7*24*60*60*1000;
   document.getElementById("c-tasks").textContent = tasks.length;
-  document.getElementById("c-deadlines").textContent = dl.length;
+  document.getElementById("c-overdue").textContent = tasks.filter(t=>t.overdue).length;
+  document.getElementById("c-week").textContent = tasks.filter(t=>t.due && t.due>=now && t.due<=endWeek).length;
   document.getElementById("c-clients").textContent = clients().length;
 }
+
 function setTab(tab, el) {
   activeTab = tab; activeClient = "Todos";
   document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
   el.classList.add("active");
   renderTab();
 }
+
 function renderTab() {
   const chips = document.getElementById("chips");
   const content = document.getElementById("content");
   chips.innerHTML = "";
-  if (activeTab === "status") { renderChips(); content.innerHTML = renderTable(); }
-  else if (activeTab === "deadlines") { content.innerHTML = renderDeadlines(); }
-  else if (activeTab === "clientes") { content.innerHTML = renderClients(); }
-  else if (activeTab === "equipe") { content.innerHTML = renderEquipe(); }
+
+  if (activeTab === "atrasadas") {
+    content.innerHTML = renderAtrasadas();
+  } else if (activeTab === "semana") {
+    content.innerHTML = renderSemana();
+  } else if (activeTab === "todas") {
+    renderChips();
+    content.innerHTML = renderTabela(activeClient==="Todos" ? tasks : tasks.filter(t=>t.client===activeClient));
+  } else if (activeTab === "tempo") {
+    renderChips();
+    content.innerHTML = renderTempo(activeClient==="Todos" ? tasks : tasks.filter(t=>t.client===activeClient));
+  } else if (activeTab === "clientes") {
+    content.innerHTML = renderClientes();
+  }
 }
+
 function renderChips() {
   const chips = document.getElementById("chips");
-  const all = ["Todos", ...clients()];
-  chips.innerHTML = all.map(c => {
-    const active = c === activeClient;
-    const color = c === "Todos" ? "#7c3aed" : cc(c);
+  chips.innerHTML = ["Todos",...clients()].map(c=>{
+    const active = c===activeClient;
+    const color = c==="Todos"?"#7c3aed":cc(c);
     return `<button class="chip" onclick="filterClient('${c}')" style="border-color:${active?color:"#2d2d3e"};background:${active?color+"22":"transparent"};color:${active?color:"#64748b"}">${c}</button>`;
   }).join("");
 }
-function filterClient(c) { activeClient = c; renderTab(); }
-function renderTable() {
-  const filtered = activeClient === "Todos" ? tasks : tasks.filter(t=>t.client===activeClient);
-  if (!filtered.length) return '<div class="empty">Nenhuma tarefa.</div>';
+function filterClient(c) { activeClient=c; renderTab(); }
+
+function statusSelect(t) {
+  const sid = "s_"+t.id;
+  const opts = STATUSES.map(s=>`<option value="${s}" ${s===t.status?"selected":""}>${s}</option>`).join("");
+  return `<select class="status-select" onchange="updateStatus('${t.id}',this.value,'${sid}')">
+    ${opts}</select> <span id="${sid}"></span>`;
+}
+
+function renderTabela(list) {
+  if (!list.length) return '<div class="empty">Nenhuma tarefa.</div>';
   return `<div class="table-wrap"><table>
-    <thead><tr><th>Tarefa</th><th>Cliente</th><th>Status</th><th>Responsáveis</th></tr></thead>
-    <tbody>${filtered.map(t=>`
-      <tr>
+    <thead><tr><th>Tarefa</th><th>Cliente</th><th>Status</th><th>Deadline</th><th>Tempo</th><th>Responsáveis</th></tr></thead>
+    <tbody>${list.map(t=>{
+      const days = t.due ? daysUntil(t.due) : null;
+      const dc = urgColor(days);
+      return `<tr class="${t.overdue?"overdue":""}">
+        <td><a href="${t.url}" target="_blank" style="display:block;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#e2e8f0;font-weight:500">${t.name}</a>
+        ${t.overdue?`<span class="overdue-tag">${t.daysLate}d atraso</span>`:""}</td>
+        <td><span style="color:${cc(t.client)};font-weight:600;font-size:11px">${t.client}</span></td>
+        <td>${statusSelect(t)}</td>
+        <td style="color:${t.due?dc:"#475569"};font-weight:${t.overdue?700:400}">${t.due?fmtDate(t.due)+"<br><span style='font-size:10px'>"+(days<0?Math.abs(days)+"d atraso":days===0?"hoje":days+"d")+"</span>":"—"}</td>
+        <td style="color:#a78bfa;font-weight:600">${fmtMs(t.timeMs)}</td>
+        <td>${(t.assignees||[]).slice(0,3).map(a=>`<span class="assignee">${a.split(" ")[0]}</span>`).join("")}</td>
+      </tr>`;
+    }).join("")}</tbody></table></div>`;
+}
+
+function renderAtrasadas() {
+  const list = tasks.filter(t=>t.overdue).sort((a,b)=>b.daysLate-a.daysLate);
+  if (!list.length) return '<div class="empty" style="color:#34d399">✓ Nenhuma tarefa atrasada!</div>';
+  return `<div class="section-title" style="color:#ef4444">⚠ ${list.length} tarefa${list.length!==1?"s":""} atrasada${list.length!==1?"s":""}</div>`+renderTabela(list);
+}
+
+function renderSemana() {
+  const now = Date.now();
+  const endWeek = now + 7*24*60*60*1000;
+  const atrasadas = tasks.filter(t=>t.overdue).sort((a,b)=>b.daysLate-a.daysLate);
+  const semana = tasks.filter(t=>t.due && t.due>=now && t.due<=endWeek).sort((a,b)=>a.due-b.due);
+  let html = "";
+  if (atrasadas.length) {
+    html += `<div class="week-section"><div class="section-title" style="color:#ef4444">🔴 Atrasadas (${atrasadas.length})</div>${renderTabela(atrasadas)}</div>`;
+  }
+  if (semana.length) {
+    html += `<div class="week-section"><div class="section-title" style="color:#fbbf24">📅 Vencem nos próximos 7 dias (${semana.length})</div>${renderTabela(semana)}</div>`;
+  }
+  if (!html) html = '<div class="empty" style="color:#34d399">✓ Nada atrasado nem vencendo essa semana!</div>';
+  return html;
+}
+
+function renderTempo(list) {
+  const comTempo = list.filter(t=>t.timeMs>0).sort((a,b)=>b.timeMs-a.timeMs);
+  if (!comTempo.length) return '<div class="empty">Nenhum tempo registrado nos últimos 60 dias.</div>';
+  const total = comTempo.reduce((s,t)=>s+t.timeMs,0);
+  return `<div style="margin-bottom:12px;font-size:12px;color:#64748b">Total registrado: <strong style="color:#a78bfa">${fmtMs(total)}</strong></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Tarefa</th><th>Cliente</th><th>Status</th><th>Tempo</th><th>%</th></tr></thead>
+    <tbody>${comTempo.map(t=>{
+      const pct = Math.round((t.timeMs/total)*100);
+      return `<tr>
         <td><a href="${t.url}" target="_blank" style="display:block;max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#e2e8f0;font-weight:500">${t.name}</a></td>
         <td><span style="color:${cc(t.client)};font-weight:600;font-size:11px">${t.client}</span></td>
-        <td><span class="status-badge" style="background:${sbg(t.status)};color:${sc(t.status)}">${t.status}</span></td>
-        <td>${(t.assignees||[]).slice(0,3).map(a=>`<span class="assignee">${a.split(" ")[0]}</span>`).join("")}</td>
-      </tr>`).join("")}
-    </tbody></table></div>`;
+        <td><span class="badge" style="background:${sc(t.status)}22;color:${sc(t.status)}">${t.status}</span></td>
+        <td style="color:#a78bfa;font-weight:700">${fmtMs(t.timeMs)}</td>
+        <td><div style="display:flex;align-items:center;gap:8px">
+          <div class="bar-wrap"><div class="bar" style="width:${pct}%;background:#7c3aed"></div></div>
+          <span style="font-size:11px;color:#64748b">${pct}%</span>
+        </div></td>
+      </tr>`;
+    }).join("")}</tbody></table></div>`;
 }
-function renderDeadlines() {
-  const dl = tasks.filter(t=>t.due).sort((a,b)=>a.due-b.due).slice(0,20);
-  if (!dl.length) return '<div class="empty">Nenhuma deadline registrada.</div>';
-  return dl.map(t=>{
-    const days = Math.ceil((t.due - Date.now())/86400000);
-    const c = days<0?"#ef4444":days<=2?"#f97316":days<=7?"#fbbf24":"#34d399";
-    const d = new Date(t.due).toLocaleDateString("pt-BR",{day:"2-digit",month:"short"});
-    const label = days<0?`${Math.abs(days)}d atraso`:days===0?"Hoje":`${days}d`;
-    return `<div class="deadline-card">
-      <div><div style="font-size:13px;font-weight:600;color:#f1f5f9;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.name}</div>
-      <div style="font-size:11px;color:${cc(t.client)};margin-top:2px">${t.client}</div></div>
-      <div style="text-align:right"><div style="font-size:13px;font-weight:700;color:${c}">${d}</div>
-      <div style="font-size:11px;color:${c}">${label}</div></div>
-    </div>`;
-  }).join("");
-}
-function renderClients() {
+
+function renderClientes() {
   return clients().map(c=>{
     const ct = tasks.filter(t=>t.client===c);
-    const pct = Math.max((ct.length/tasks.length)*100, 3);
+    const atrasadas = ct.filter(t=>t.overdue).length;
     const color = cc(c);
+    const pct = Math.max((ct.length/tasks.length)*100,3);
+    const tempoTotal = ct.reduce((s,t)=>s+t.timeMs,0);
     return `<div class="client-card">
-      <div class="top"><span style="font-weight:700;font-size:14px;color:${color}">${c}</span>
-      <span style="font-size:11px;color:#64748b">${ct.length} tarefa${ct.length!==1?"s":""}</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-weight:700;font-size:14px;color:${color}">${c}</span>
+        <div style="display:flex;gap:12px;align-items:center">
+          ${atrasadas>0?`<span class="overdue-tag">${atrasadas} atrasada${atrasadas!==1?"s":""}</span>`:""}
+          <span style="font-size:11px;color:#a78bfa">${fmtMs(tempoTotal)}</span>
+          <span style="font-size:11px;color:#64748b">${ct.length} tarefa${ct.length!==1?"s":""}</span>
+        </div>
+      </div>
       <div class="progress"><div class="progress-bar" style="width:${pct}%;background:${color}"></div></div>
-      <div class="badges">${ct.map(t=>`<span class="status-badge" style="background:${sbg(t.status)};color:${sc(t.status)}">${t.status}</span>`).join("")}</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap">${ct.map(t=>`<span class="badge" style="background:${sc(t.status)}22;color:${sc(t.status)}">${t.status}</span>`).join("")}</div>
     </div>`;
   }).join("");
-}
-function renderEquipe() {
-  const assignees = [...new Set(tasks.flatMap(t=>t.assignees||[]))].sort();
-  const rows = assignees.map(a=>{
-    const at = tasks.filter(t=>(t.assignees||[]).includes(a));
-    if (!at.length) return "";
-    const ac = [...new Set(at.map(t=>t.client))];
-    const pct = Math.min((at.length/8)*100,100);
-    const barColor = at.length>=7?"#ef4444":at.length>=4?"#f97316":"#7c3aed";
-    return `<tr>
-      <td style="color:#e2e8f0;font-weight:500">${a}</td>
-      <td style="color:#a78bfa;font-weight:700">${at.length}</td>
-      <td>${ac.map(c=>`<span style="font-size:10px;color:${cc(c)};background:${cc(c)}22;padding:2px 7px;border-radius:10px;font-weight:600;display:inline-block;margin:1px">${c}</span>`).join("")}</td>
-      <td><div class="bar-wrap"><div class="bar" style="width:${pct}%;background:${barColor}"></div></div></td>
-    </tr>`;
-  }).join("");
-  return `<div class="table-wrap"><table>
-    <thead><tr><th>Membro</th><th>Tarefas</th><th>Clientes</th><th>Carga</th></tr></thead>
-    <tbody>${rows}</tbody></table></div>`;
 }
 </script>
 </body>
